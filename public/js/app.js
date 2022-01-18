@@ -5299,8 +5299,69 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: 'Post',
+  data: function data() {
+    return {
+      fullName: '',
+      commentText: '',
+      motherComment: 0
+    };
+  },
+  methods: {
+    goBack: function goBack() {
+      this.$router.go(-1);
+    },
+    requiredInfo: function requiredInfo() {// let self = this;
+      // axios.get('/api/v1/drivers/create')
+      // .then(function (response) {
+      //     self.users = response.data.data.users_pluck;
+      // }).catch(function (error) {
+      //     self.errorContent = error.response.data.message[0];
+      //     self.errorModal = true;
+      // });
+    },
+    send: function send() {
+      var formData = new FormData();
+      formData.append('fullName', this.fullName);
+      formData.append('commentText', this.commentText);
+      formData.append('motherComment', this.motherComment);
+      console.log('Send comment.');
+      axios.post('/api/v1/send-comment', formData).then(function (response) {// self.successModal = true;
+      })["catch"](function (error) {// self.errorContent = error.response.data.message[0];
+        // self.errorModal = true;
+      });
+    }
+  },
   mounted: function mounted() {
+    this.requiredInfo();
     console.log('Component mounted.');
   }
 });
@@ -28036,28 +28097,121 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row justify-content-center" }, [
+      _c("div", { staticClass: "col-md-8" }, [
+        _vm._m(0),
+        _c("br"),
+        _vm._v(" "),
+        _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "card-header" }, [
+            _vm._v("Comments Section"),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c("form", [
+              _c("div", { staticClass: "form-group row pt-1" }, [
+                _c(
+                  "label",
+                  {
+                    staticClass: "col-sm-2 col-form-label",
+                    attrs: { for: "inputPassword" },
+                  },
+                  [_vm._v("Full Name")]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-sm-10" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.fullName,
+                        expression: "fullName",
+                      },
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", id: "fullname", required: "" },
+                    domProps: { value: _vm.fullName },
+                    on: {
+                      input: function ($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.fullName = $event.target.value
+                      },
+                    },
+                  }),
+                ]),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group row pt-1" }, [
+                _c(
+                  "label",
+                  {
+                    staticClass: "col-sm-2 col-form-label",
+                    attrs: { for: "text" },
+                  },
+                  [_vm._v("Comment's text")]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-sm-10" }, [
+                  _c("textarea", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.commentText,
+                        expression: "commentText",
+                      },
+                    ],
+                    staticClass: "form-control",
+                    attrs: { id: "text", rows: "3", required: "" },
+                    domProps: { value: _vm.commentText },
+                    on: {
+                      input: function ($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.commentText = $event.target.value
+                      },
+                    },
+                  }),
+                ]),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group row pt-1" }, [
+                _c("div", { staticClass: "col-sm-2" }),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-sm-10" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary btn-block",
+                      attrs: { type: "button" },
+                      on: { click: _vm.send },
+                    },
+                    [_vm._v("Send Comment")]
+                  ),
+                ]),
+              ]),
+            ]),
+          ]),
+        ]),
+      ]),
+    ]),
+  ])
 }
 var staticRenderFns = [
   function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-8" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v("Example Post Title"),
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _vm._v(
-                "\n                    Example Post Body.\n                "
-              ),
-            ]),
-          ]),
-        ]),
+    return _c("div", { staticClass: "card" }, [
+      _c("div", { staticClass: "card-header" }, [_vm._v("Example Post Title")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-body" }, [
+        _vm._v("\n                    Example Post Body.\n                "),
       ]),
     ])
   },
