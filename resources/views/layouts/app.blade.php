@@ -18,6 +18,10 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <Style>
+        scroll-behavior: smooth;
+    </Style>
 </head>
 <body>
     <div id="app">

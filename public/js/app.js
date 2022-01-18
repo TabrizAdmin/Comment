@@ -5335,10 +5335,47 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'Post',
   data: function data() {
     return {
+      comments: [],
       fullName: '',
       commentText: '',
       motherComment: 0
@@ -5348,14 +5385,14 @@ __webpack_require__.r(__webpack_exports__);
     goBack: function goBack() {
       this.$router.go(-1);
     },
-    requiredInfo: function requiredInfo() {// let self = this;
-      // axios.get('/api/v1/drivers/create')
-      // .then(function (response) {
-      //     self.users = response.data.data.users_pluck;
-      // }).catch(function (error) {
-      //     self.errorContent = error.response.data.message[0];
-      //     self.errorModal = true;
-      // });
+    requiredInfo: function requiredInfo() {
+      var self = this;
+      axios.get('/api/v1/get-comments').then(function (response) {
+        console.log(response.data.data);
+        self.comments = response.data.data;
+      })["catch"](function (error) {// self.errorContent = error.response.data.message[0];
+        // self.errorModal = true;
+      });
     },
     send: function send() {
       var formData = new FormData();
@@ -28116,6 +28153,114 @@ var render = function () {
           _c("div", { staticClass: "card-header" }, [
             _vm._v("Comments Section"),
           ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "card-body" },
+            [
+              _vm._l(_vm.comments, function (comment) {
+                return _c("div", { staticClass: "card" }, [
+                  _c("div", { staticClass: "card-header" }, [
+                    _vm._v(
+                      _vm._s(comment.full_name) +
+                        " (" +
+                        _vm._s(comment.created_at) +
+                        ")"
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "card-body" },
+                    [
+                      _vm._v(
+                        "\n                            " +
+                          _vm._s(comment.text) +
+                          "\n                            "
+                      ),
+                      _c("br"),
+                      _vm._v(" "),
+                      _c(
+                        "a",
+                        {
+                          staticClass: "btn btn-link",
+                          attrs: { href: "#commentsection" },
+                        },
+                        [_vm._v("Replay")]
+                      ),
+                      _vm._v(" "),
+                      _vm._l(comment.children, function (comment1) {
+                        return _c("div", { staticClass: "card" }, [
+                          _c("div", { staticClass: "card-header" }, [
+                            _vm._v(
+                              _vm._s(comment1.full_name) +
+                                " (" +
+                                _vm._s(comment1.created_at) +
+                                ")"
+                            ),
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "card-body" },
+                            [
+                              _vm._v(
+                                "\n                                    " +
+                                  _vm._s(comment1.text) +
+                                  "\n                                    "
+                              ),
+                              _c("br"),
+                              _vm._v(" "),
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "btn btn-link",
+                                  attrs: { href: "#commentsection" },
+                                },
+                                [_vm._v("Replay")]
+                              ),
+                              _vm._v(" "),
+                              _vm._l(comment1.children, function (comment2) {
+                                return _c("div", { staticClass: "card" }, [
+                                  _c("div", { staticClass: "card-header" }, [
+                                    _vm._v(
+                                      _vm._s(comment2.full_name) +
+                                        " (" +
+                                        _vm._s(comment2.created_at) +
+                                        ")"
+                                    ),
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "card-body" }, [
+                                    _vm._v(
+                                      "\n                                            " +
+                                        _vm._s(comment2.text) +
+                                        "\n                                        "
+                                    ),
+                                  ]),
+                                ])
+                              }),
+                              _c("br"),
+                            ],
+                            2
+                          ),
+                        ])
+                      }),
+                      _c("br"),
+                    ],
+                    2
+                  ),
+                ])
+              }),
+              _c("br"),
+            ],
+            2
+          ),
+        ]),
+        _c("br"),
+        _vm._v(" "),
+        _c("div", { staticClass: "card", attrs: { id: "commentsection" } }, [
+          _c("div", { staticClass: "card-header" }, [_vm._v("Send Comment")]),
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
             _c("form", [

@@ -23,6 +23,42 @@
                     <div class="card-header">Comments Section</div>
 
                     <div class="card-body">
+                        <div class="card" v-for="comment in comments">
+                            <div class="card-header">{{ comment.full_name }} ({{ comment.created_at }})</div>
+
+                            <div class="card-body">
+                                {{ comment.text }}
+                                <br>
+                                <a href="#commentsection" class="btn btn-link">Replay</a>
+
+                                <div class="card" v-for="comment1 in comment.children">
+                                    <div class="card-header">{{ comment1.full_name }} ({{ comment1.created_at }})</div>
+
+                                    <div class="card-body">
+                                        {{ comment1.text }}
+                                        <br>
+                                        <a href="#commentsection" class="btn btn-link">Replay</a>
+
+                                        <div class="card" v-for="comment2 in comment1.children">
+                                            <div class="card-header">{{ comment2.full_name }} ({{ comment2.created_at }})</div>
+
+                                            <div class="card-body">
+                                                {{ comment2.text }}
+                                            </div>
+                                        </div><br>
+
+                                    </div>
+                                </div><br>
+
+                            </div>
+                        </div><br>
+                    </div>
+                </div><br>
+
+                <div class="card" id="commentsection">
+                    <div class="card-header">Send Comment</div>
+
+                    <div class="card-body">
                         <form>
                             <div class="form-group row pt-1">
                                 <label for="inputPassword" class="col-sm-2 col-form-label">Full Name</label>
@@ -55,6 +91,7 @@
         name: 'Post',
         data: () => {
             return {
+                comments: [],
                 fullName: '',
                 commentText: '',
                 motherComment: 0
@@ -65,14 +102,15 @@
                 this.$router.go(-1);
             },
             requiredInfo: function() {
-                // let self = this;
-                // axios.get('/api/v1/drivers/create')
-                // .then(function (response) {
-                //     self.users = response.data.data.users_pluck;
-                // }).catch(function (error) {
-                //     self.errorContent = error.response.data.message[0];
-                //     self.errorModal = true;
-                // });
+                let self = this;
+                axios.get('/api/v1/get-comments')
+                .then(function (response) {
+                    console.log(response.data.data);
+                    self.comments = response.data.data;
+                }).catch(function (error) {
+                    // self.errorContent = error.response.data.message[0];
+                    // self.errorModal = true;
+                });
             },
             send: function() {
                 const formData = new FormData();

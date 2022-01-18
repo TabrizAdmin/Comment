@@ -11,7 +11,7 @@ class CommentController extends Controller
 {
     public function getComments(Request $request)
     {
-        $comments = Comment::latest()->paginate(10);
+        $comments = Comment::with(['children', 'children.children'])->where('mother_id', 0)->latest()->paginate(10);
 
         return new CommentCollection($comments);
     }

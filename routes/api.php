@@ -15,6 +15,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::prefix('v1')->as('api.')->namespace('API')->group(function () {
-    Route::get('get-comments', 'CommentController@getComments')->name('get.comments');
-    Route::post('send-comment', 'CommentController@sendComment')->name('send.commnent');
+    Route::get('get-comments', [App\Http\Controllers\API\CommentController::class, 'getComments'])->name('get.comments');
+    Route::post('send-comment', [App\Http\Controllers\API\CommentController::class, 'sendComment'])->name('send.commnent');
 });
