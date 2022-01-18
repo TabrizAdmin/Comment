@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::prefix('v1')->as('api.')->namespace('API')->group(function () {
+    Route::get('get-comments', 'CommentController@getComments')->name('get.comments');
+    Route::post('send-comment', 'CommentController@sendComment')->name('send.commnent');
 });
