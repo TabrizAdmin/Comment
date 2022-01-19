@@ -52,6 +52,8 @@
 
                             </div>
                         </div><br>
+                        <pagination :limit="limitVal" align="center" :show-disabled="showDisabled" :data="commentsObj" @pagination-change-page="requiredInfo"></pagination>
+
                     </div>
                 </div><br>
 
@@ -92,10 +94,13 @@
         data: () => {
             return {
                 comments: [],
+                commentsObj: {},
                 fullName: '',
                 commentText: '',
                 motherComment: 0,
-                motherId: 0
+                motherId: 0,
+                limitVal: 3,
+                showDisabled: true
             }
         },
         methods: {
@@ -105,11 +110,12 @@
             sendReplay(commentId) {
                 this.motherComment = commentId;
             },
-            requiredInfo: function() {
+            requiredInfo(page = 1) {
                 let self = this;
-                axios.get('/api/v1/get-comments')
+                axios.get('/api/v1/get-comments?page=' + page)
                 .then(function (response) {
                     self.comments = response.data.data;
+                    self.commentsObj = response.data;
                 });
             },
             send: function() {
