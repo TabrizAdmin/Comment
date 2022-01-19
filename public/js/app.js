@@ -5378,31 +5378,31 @@ __webpack_require__.r(__webpack_exports__);
       comments: [],
       fullName: '',
       commentText: '',
-      motherComment: 0
+      motherComment: 0,
+      motherId: 0
     };
   },
   methods: {
     goBack: function goBack() {
       this.$router.go(-1);
     },
+    sendReplay: function sendReplay(commentId) {
+      this.motherComment = commentId;
+    },
     requiredInfo: function requiredInfo() {
       var self = this;
       axios.get('/api/v1/get-comments').then(function (response) {
-        console.log(response.data.data);
         self.comments = response.data.data;
-      })["catch"](function (error) {// self.errorContent = error.response.data.message[0];
-        // self.errorModal = true;
       });
     },
     send: function send() {
+      var self = this;
       var formData = new FormData();
-      formData.append('fullName', this.fullName);
-      formData.append('commentText', this.commentText);
-      formData.append('motherComment', this.motherComment);
-      console.log('Send comment.');
-      axios.post('/api/v1/send-comment', formData).then(function (response) {// self.successModal = true;
-      })["catch"](function (error) {// self.errorContent = error.response.data.message[0];
-        // self.errorModal = true;
+      formData.append('full_name', this.fullName);
+      formData.append('text', this.commentText);
+      formData.append('mother_id', this.motherComment);
+      axios.post('/api/v1/send-comment', formData).then(function (response) {
+        self.requiredInfo();
       });
     }
   },
@@ -28185,6 +28185,11 @@ var render = function () {
                         {
                           staticClass: "btn btn-link",
                           attrs: { href: "#commentsection" },
+                          on: {
+                            click: function ($event) {
+                              return _vm.sendReplay(comment.id)
+                            },
+                          },
                         },
                         [_vm._v("Replay")]
                       ),
@@ -28216,6 +28221,11 @@ var render = function () {
                                 {
                                   staticClass: "btn btn-link",
                                   attrs: { href: "#commentsection" },
+                                  on: {
+                                    click: function ($event) {
+                                      return _vm.sendReplay(comment1.id)
+                                    },
+                                  },
                                 },
                                 [_vm._v("Replay")]
                               ),

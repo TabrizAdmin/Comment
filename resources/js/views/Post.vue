@@ -29,7 +29,7 @@
                             <div class="card-body">
                                 {{ comment.text }}
                                 <br>
-                                <a href="#commentsection" class="btn btn-link">Replay</a>
+                                <a href="#commentsection" class="btn btn-link" @click="sendReplay(comment.id)">Replay</a>
 
                                 <div class="card" v-for="comment1 in comment.children">
                                     <div class="card-header">{{ comment1.full_name }} ({{ comment1.created_at }})</div>
@@ -37,7 +37,7 @@
                                     <div class="card-body">
                                         {{ comment1.text }}
                                         <br>
-                                        <a href="#commentsection" class="btn btn-link">Replay</a>
+                                        <a href="#commentsection" class="btn btn-link" @click="sendReplay(comment1.id)">Replay</a>
 
                                         <div class="card" v-for="comment2 in comment1.children">
                                             <div class="card-header">{{ comment2.full_name }} ({{ comment2.created_at }})</div>
@@ -94,36 +94,33 @@
                 comments: [],
                 fullName: '',
                 commentText: '',
-                motherComment: 0
+                motherComment: 0,
+                motherId: 0
             }
         },
         methods: {
             goBack() {
                 this.$router.go(-1);
             },
+            sendReplay(commentId) {
+                this.motherComment = commentId;
+            },
             requiredInfo: function() {
                 let self = this;
                 axios.get('/api/v1/get-comments')
                 .then(function (response) {
-                    console.log(response.data.data);
                     self.comments = response.data.data;
-                }).catch(function (error) {
-                    // self.errorContent = error.response.data.message[0];
-                    // self.errorModal = true;
                 });
             },
             send: function() {
+                let self = this;
                 const formData = new FormData();
-                formData.append('fullName', this.fullName);
-                formData.append('commentText', this.commentText);
-                formData.append('motherComment', this.motherComment);
-                console.log('Send comment.');
+                formData.append('full_name', this.fullName);
+                formData.append('text', this.commentText);
+                formData.append('mother_id', this.motherComment);
                 axios.post('/api/v1/send-comment', formData)
                 .then(function (response) {
-                    // self.successModal = true;
-                }).catch(function (error) {
-                    // self.errorContent = error.response.data.message[0];
-                    // self.errorModal = true;
+                    self.requiredInfo();
                 });
             }
         },
