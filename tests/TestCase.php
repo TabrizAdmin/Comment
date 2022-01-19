@@ -3,8 +3,14 @@
 namespace Tests;
 
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Illuminate\Support\Facades\Artisan;
 
 abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication;
+
+    public function migrate()
+    {
+        Artisan::call('migrate',['-vvv' => true]);
+    }
 }
